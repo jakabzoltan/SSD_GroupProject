@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Lab3B.Models.CreditCard>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ECC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SECC)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td style="overflow-x:hidden; max-width:45%" width="45%">
+                @Html.TextBoxFor(modelItem => item.ECC, new { @class = "form-control", disabled = "disabled" })
+            </td>
+            <td style="overflow-x:hidden; max-width:45%" width="45%">
+                @Html.TextBoxFor(modelItem => item.SECC, new {@class="form-control", disabled="disabled"})
+            </td>
+            <td style="overflow-x:hidden;" width="10%">
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

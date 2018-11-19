@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs
+/GroupProject/obj
+/GroupProject/bin/Debug/netcoreapp2.0

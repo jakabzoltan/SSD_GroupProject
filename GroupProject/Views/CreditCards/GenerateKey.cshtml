@@ -1,0 +1,53 @@
+﻿@model KeygenModel
+@{
+    ViewData["Title"] = "Generate Key";
+}
+
+<h2>Keys</h2>
+
+<div class="panel">
+    <div class="panel-heading">
+        <label asp-for="HmacKey"></label>
+    </div>
+    <div class="panel-body">
+        <div>
+            <textarea asp-for="HmacKey" class="form-control" readonly="readonly" cols="10" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-heading">
+        <label asp-for="AesKey"></label>
+    </div>
+    <div class="panel-body">
+        <div>
+            <textarea asp-for="AesKey" class="form-control" readonly="readonly" cols="10" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-heading">
+        <label asp-for="AesIv"></label>
+    </div>
+    <div class="panel-body">
+        <div>
+            <textarea asp-for="AesIv" class="form-control" readonly="readonly" cols="10" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-heading">
+        <label asp-for="AsymmetricPrivateKey"></label>
+    </div>
+    <div class="panel-body">
+        <div>
+            <textarea asp-for="AsymmetricPrivateKey" class="form-control" readonly="readonly" cols="10" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+
+eKey</h2>
+
