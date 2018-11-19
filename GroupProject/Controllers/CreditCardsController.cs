@@ -38,7 +38,7 @@ namespace GroupProject.Controllers
         }
 
         // GET: CreditCards/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -89,7 +89,7 @@ namespace GroupProject.Controllers
         }
 
         // GET: CreditCards/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -121,7 +121,7 @@ namespace GroupProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ECC,SECC")] CreditCard creditCard)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ECC,SECC")] CreditCard creditCard)
         {
             if (id != creditCard.Id)
             {
@@ -152,7 +152,7 @@ namespace GroupProject.Controllers
         }
 
         // GET: CreditCards/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -172,7 +172,7 @@ namespace GroupProject.Controllers
         // POST: CreditCards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var creditCard = await _context.CreditCard.SingleOrDefaultAsync(m => m.Id == id);
             _context.CreditCard.Remove(creditCard);
@@ -180,7 +180,7 @@ namespace GroupProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CreditCardExists(int id)
+        private bool CreditCardExists(Guid id)
         {
             return _context.CreditCard.Any(e => e.Id == id);
         }

@@ -33,8 +33,12 @@ namespace GroupProject
                 .AddEntityFrameworkStores<GroupProjectContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthorization();
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ICreditCardService, CreditCardService>();
+
 
             services.AddMvc();
         }

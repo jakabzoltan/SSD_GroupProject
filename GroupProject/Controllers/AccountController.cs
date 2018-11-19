@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using GroupProject.Models;
 using GroupProject.Models.AccountViewModels;
 using GroupProject.Services;
+using GroupProject.Extensions;
 
 namespace GroupProject.Controllers
 {
@@ -59,6 +60,15 @@ namespace GroupProject.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+
+                if (!await _userManager.IsAccountDeactivated(user.Id))
+                {
+                    ModelState.AddModelError("InactiveAccount", "Account is currently deactivated");
+                    return View(model);
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -436,6 +446,25 @@ namespace GroupProject.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAccounts()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> GetAccount(string userId)
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> ToggleUserActivation(ApplicationUser user)
+        {
+            var userDeactivated = (await _userManager.FindByIdAsync(user.Id)).Deactivated;
+            await _userManager.ToggleUserActive(user.Id);
+
+            return RedirectToAction(nameof(GetAccount), new { userId = user.Id });
+        }
+
 
         #region Helpers
 

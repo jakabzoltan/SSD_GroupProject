@@ -9,8 +9,9 @@ namespace GroupProject.Models
 {
     public class CreditCard
     {
+
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// Plain Text Credit Card
         /// </summary>
@@ -30,5 +31,11 @@ namespace GroupProject.Models
         /// </summary>
         [Display(Name = "Signed And Encrypted Credit Card")]
         public string SECC { get; set; }
+        [Required]
+        public string CvcCode { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

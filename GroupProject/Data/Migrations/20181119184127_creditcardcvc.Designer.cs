@@ -11,9 +11,10 @@ using System;
 namespace GroupProject.Data.Migrations
 {
     [DbContext(typeof(GroupProjectContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181119184127_creditcardcvc")]
+    partial class creditcardcvc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
