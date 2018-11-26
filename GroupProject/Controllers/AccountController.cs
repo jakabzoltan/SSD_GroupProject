@@ -446,24 +446,24 @@ namespace GroupProject.Controllers
         {
             return View();
         }
+
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAccounts()
+        public IActionResult GetAccounts()
         {
-            return View();
+            var users= _userManager.Users.ToList();
+            return View("Accounts",users);
         }
 
-        public async Task<IActionResult> GetAccount(string userId)
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> ToggleUserActivation(string userId)
         {
-            return View();
+            var userDeactivated = (await _userManager.FindByIdAsync(userId)).Deactivated;
+            await _userManager.ToggleUserActive(userId);
+
+            return RedirectToAction(nameof(GetAccounts));
         }
 
-        public async Task<IActionResult> ToggleUserActivation(ApplicationUser user)
-        {
-            var userDeactivated = (await _userManager.FindByIdAsync(user.Id)).Deactivated;
-            await _userManager.ToggleUserActive(user.Id);
 
-            return RedirectToAction(nameof(GetAccount), new { userId = user.Id });
-        }
 
 
         #region Helpers

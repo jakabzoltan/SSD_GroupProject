@@ -1,0 +1,39 @@
+﻿@model List<ApplicationUser>
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+
+<h2>Accounts</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td style="overflow-x:hidden; max-width:45%" width="45%">
+                    @item.Email
+                </td>
+                <td style="overflow-x:hidden; max-width:45%;" width="45%">
+                    @{ 
+                        var text = item.Deactivated ? "Inactive" : "Active";
+                        var buttonText = item.Deactivated ? "Activate" : "Deactivate";
+                    }
+                    @text
+                </td>
+                <td style="overflow-x:hidden;" width="10%">
+                    <a asp-action="ToggleUserActivation" asp-route-userId="@item.Id">@buttonText</a>
+                    <a asp-action="SendEmail" asp-route-userId="item.Id">Send Email</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
