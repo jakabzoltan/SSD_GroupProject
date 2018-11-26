@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace GroupProject.Data.Migrations
+namespace GroupProject.Migrations
 {
     [DbContext(typeof(GroupProjectContext))]
-    [Migration("20181119180649_ApplicationUserActiveState")]
-    partial class ApplicationUserActiveState
+    partial class GroupProjectContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,10 +27,10 @@ namespace GroupProject.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<bool>("Active");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<bool>("Deactivated");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -76,14 +75,21 @@ namespace GroupProject.Data.Migrations
 
             modelBuilder.Entity("GroupProject.Models.CreditCard", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CvcCode")
+                        .IsRequired();
 
                     b.Property<string>("ECC");
 
                     b.Property<string>("SECC");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CreditCard");
                 });
@@ -194,6 +200,13 @@ namespace GroupProject.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("GroupProject.Models.CreditCard", b =>
+                {
+                    b.HasOne("GroupProject.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

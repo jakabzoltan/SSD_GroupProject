@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace GroupProject.Data.Migrations
+namespace GroupProject.Migrations
 {
     [DbContext(typeof(GroupProjectContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181126183124_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,10 +28,10 @@ namespace GroupProject.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<bool>("Active");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<bool>("Deactivated");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
