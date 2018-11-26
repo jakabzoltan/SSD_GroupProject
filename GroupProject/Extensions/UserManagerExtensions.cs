@@ -12,14 +12,14 @@ namespace GroupProject.Extensions
         public static async Task<bool> ToggleUserActive(this UserManager<ApplicationUser> userManager, string userId)
         {
             var x = await userManager.FindByIdAsync(userId);
-            x.Active = !x.Active;
+            x.Deactivated = !x.Deactivated;
             var result = await userManager.UpdateAsync(x);
             if (result.Succeeded) return true;
             return false;
         }
         public static async Task<bool> IsAccountDeactivated(this UserManager<ApplicationUser> userManager, string userId)
         {
-            return (await userManager.FindByIdAsync(userId)).Active;
+            return (await userManager.FindByIdAsync(userId)).Deactivated;
         }
 
 

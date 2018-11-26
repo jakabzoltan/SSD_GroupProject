@@ -63,7 +63,7 @@ namespace GroupProject.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
 
 
-                if (!await _userManager.IsAccountDeactivated(user.Id))
+                if (await _userManager.IsAccountDeactivated(user.Id))
                 {
                     ModelState.AddModelError("InactiveAccount", "Account is currently deactivated");
                     return View(model);
