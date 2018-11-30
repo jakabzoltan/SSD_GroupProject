@@ -35,6 +35,10 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li><a asp-area="" asp-controller="Account" asp-action="GetAccounts">Users</a></li>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="CreditCards" asp-action="Index">Users</a></li>
 
                     }
 

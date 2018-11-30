@@ -55,7 +55,7 @@ namespace GroupProject.Services
         /// <param name="creditCard">The credit card.</param>
         /// <param name="cvcCode">The CVC code.</param>
         /// <returns>Returns the id of the created credit card.</returns>
-        public async Task<CreditCard> CreateCreditCardAsync(string creditCard, string cvcCode)
+        public async Task<CreditCard> CreateCreditCardAsync(string creditCard, string cvcCode, string userId)
         {
             var encryptedContent = this.cryptoService.EncryptContent(creditCard);
             var signedContent = this.cryptoService.SignContent(Convert.FromBase64String(encryptedContent));
@@ -64,7 +64,8 @@ namespace GroupProject.Services
             {
                 CvcCode = dataProtector.Protect(cvcCode),
                 ECC = encryptedContent,
-                SECC = signedContent
+                SECC = signedContent,
+                UserId = userId
             };
 
             this.context.CreditCard.Add(cc);

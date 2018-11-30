@@ -14,7 +14,7 @@
             @Html.DisplayNameFor(model => model.PTCC)
         </dt>
         <dd>
-            @Html.TextAreaFor(model => model.PTCC, new {@class= "form-control", disabled="disabled"})
+            @Html.TextAreaFor(model => model.PTCC, new { @class = "form-control", disabled = "disabled" })
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ECC)
@@ -27,6 +27,12 @@
         </dt>
         <dd>
             @Html.TextAreaFor(model => model.SECC, new { @class = "form-control", disabled = "disabled" })
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CvcCode)
+        </dt>
+        <dd>
+            @Html.TextAreaFor(model => model.CvcCode, new { @class = "form-control", disabled = "disabled" })
         </dd>
     </dl>
 </div>

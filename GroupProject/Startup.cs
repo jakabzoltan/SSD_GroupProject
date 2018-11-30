@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using GroupProject.Data;
 using GroupProject.Models;
 using GroupProject.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject
 {
@@ -39,6 +40,11 @@ namespace GroupProject
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICreditCardService, CreditCardService>();
 
+            services.Configure<MvcOptions>(o =>
+            {
+                o.Filters.Add(new RequireHttpsAttribute());
+            });
+
 
             services.AddMvc();
         }
@@ -60,7 +66,7 @@ namespace GroupProject
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+          
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

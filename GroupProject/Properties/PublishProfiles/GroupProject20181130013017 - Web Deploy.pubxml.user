@@ -8,4 +8,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApqXQPCBJo0infy/LHHDDjAAAAAACAAAAAAADZgAAwAAAABAAAABN+H6c4vw+R3889GWvSEjHAAAAAASAAACgAAAAEAAAADfJ7qpyf239ensVa0OnZLyAAAAA5tmRv0EaPs72tc862QCdPK/tc7wQEKunY/Le3nDaxegQMcnjIdQJl7zPtMpGsuRJfJ7Z/ZqLgjuE6jFD71HRD9yLFnWkcqQcBNrppidEAw1lVjj9o38Drcy7xYd+YgE/4Ubhc0bMvyD/XKto1815z2mWX+EbrvSTuu6mNHuuw8EUAAAAuJtKaxMwikf6jl6Nu1JRqHF8gC8=</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433;Initial Catalog=GroupProject;User Id=zoltan@quizzardserver;Password=Mohawk123!</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="GroupProject.Data.GroupProjectContext">
+      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433;Initial Catalog=GroupProject;User Id=zoltan@quizzardserver;Password=Mohawk123!</Value>
+    </EFMigrations>
+  </ItemGroup>
 </Project>
