@@ -25,17 +25,21 @@ namespace GroupProject.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger, 
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
         }
 
         [TempData]
@@ -462,7 +466,70 @@ namespace GroupProject.Controllers
 
             return RedirectToAction(nameof(GetAccounts));
         }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Email(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            SendEmailViewModel sendEmail = new SendEmailViewModel
+            {
+                Email = user.Email
+            };
+            return View(sendEmail);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Email([Bind("Subject, Text, Email")] SendEmailViewModel Email)
+        {
+            await _emailSender.SendEmailAsync(Email.Email,Email.Subject,Email.Text);
+            return View();
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> SeedSuperUser()
+        {
+            try
+            {
+                var x = await _roleManager.RoleExistsAsync("Admin");
+                //create role if not already exists
+                if (!x)
+                {
+                    var role = new IdentityRole();
+                    role.Name = "Admin";
+                    await _roleManager.CreateAsync(role);
+                }
+                string password = "Mohawk123!";
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = "Admin@Admin.com",
+                    Email = "Admin@Admin.com",
+                    EmailConfirmed = true
+                };
 
+                var result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    var AdminUser = await _userManager.FindByEmailAsync("Admin@Admin.com");
+                    if (AdminUser != null)
+                    {
+                        await _userManager.AddToRoleAsync(AdminUser, "Admin");
+                    }
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("AccessDenied", "Account");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+
+            }
+            //create admin
+
+
+            return RedirectToAction("AccessDenied", "Account");
+        }
 
 
 
