@@ -1,4 +1,4 @@
-{
+﻿{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -13,14 +13,14 @@
       "launchBrowser": true,
       "launchUrl": "https://localhost:44366/",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Staging"
       }
     },
     "GroupProject": {
-      "commandName": "Project",
+      "commandName": "Development",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Staging"
       },
       "applicationUrl": "http://localhost:2145/"
     }

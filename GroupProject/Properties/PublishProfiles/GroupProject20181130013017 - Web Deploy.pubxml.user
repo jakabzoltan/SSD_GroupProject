@@ -6,16 +6,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApqXQPCBJo0infy/LHHDDjAAAAAACAAAAAAADZgAAwAAAABAAAABN+H6c4vw+R3889GWvSEjHAAAAAASAAACgAAAAEAAAADfJ7qpyf239ensVa0OnZLyAAAAA5tmRv0EaPs72tc862QCdPK/tc7wQEKunY/Le3nDaxegQMcnjIdQJl7zPtMpGsuRJfJ7Z/ZqLgjuE6jFD71HRD9yLFnWkcqQcBNrppidEAw1lVjj9o38Drcy7xYd+YgE/4Ubhc0bMvyD/XKto1815z2mWX+EbrvSTuu6mNHuuw8EUAAAAuJtKaxMwikf6jl6Nu1JRqHF8gC8=</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAndF59Ebj5UqBxw0heJZ/PAAAAAACAAAAAAAQZgAAAAEAACAAAAB5d8A7m9IcqcIMBaPmFFXLkv+mcUKbFTA8Esa9RrEZMQAAAAAOgAAAAAIAACAAAAAxjdMNJAq/rC6ooNJu70wV7RavbVtY+MQXxuNlcSoDXiAAAAAdDgn4g3H1KAxZHkriFY6dIqQI/zOqrf/xDyuX9Jj46UAAAAAS6/K68byY5kNd//kXGnfBuF5YrBsmInUXOO3vHUD1BeZt0ZizGvkQfYMhkTAdbmgqKKgV7YBG7dKVsmfoAmCy</EncryptedPassword>
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="DefaultConnection">
-      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433;Initial Catalog=GroupProject;User Id=zoltan@quizzardserver;Password=Mohawk123!</Value>
+      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433%3bInitial Catalog=GroupProject%3bUser Id=zoltan%40quizzardserver%3bPassword=Mohawk123!</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
   <ItemGroup>
     <EFMigrations Include="GroupProject.Data.GroupProjectContext">
-      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433;Initial Catalog=GroupProject;User Id=zoltan@quizzardserver;Password=Mohawk123!</Value>
+      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433%3bInitial Catalog=GroupProject%3bUser Id=zoltan%40quizzardserver%3bPassword=Mohawk123!</Value>
     </EFMigrations>
   </ItemGroup>
 </Project>

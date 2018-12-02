@@ -59,7 +59,7 @@ namespace GroupProject
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-            else
+            else if(env.IsProduction() || env.IsStaging() || env.IsEnvironment("Staging_2"))
             {
                 app.UseExceptionHandler("/Home/Error");
             }

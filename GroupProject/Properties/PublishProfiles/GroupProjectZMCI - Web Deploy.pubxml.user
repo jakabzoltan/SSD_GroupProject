@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAndF59Ebj5UqBxw0heJZ/PAAAAAACAAAAAAAQZgAAAAEAACAAAAAv7e9brwEPFKv+LW5Yg/4KeFzTInJGKvYT46s+WIRPTAAAAAAOgAAAAAIAACAAAADa5dfeKKu3+tQCMZJK2Et8oEagd1qYFGberz4HXbVpEoAAAABMfbMQmAQ9SbwQ7eQFSqJF2CG6LopQsJecfbBpFAU28rST6FHPX/GRq1RylaESq8prg9NOnc8ubdvsyd2SPBJ9KEts+KKlb80l7Tdqvetjd7USHpC92UN4yPHSnYcTSL5s+gzQmUYH+VsfJjMRjb9lXC0d2fUxYIfVvvq9A3AdCEAAAABZvYMaduVql6VAA2UyKUHHPYf3pLjMqAFzCU+1gojl9cB9QujFVKMhGmVErKMcn1X2OKMGCJ7nInsCzWolYn0I</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="GroupProject.Data.GroupProjectContext">
+      <Value>Data Source=tcp:quizzardserver.database.windows.net,1433%3bInitial Catalog=GroupProjectZMCI_db%3bUser Id=zoltan%40quizzardserver%3bPassword=Mohawk123!</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
