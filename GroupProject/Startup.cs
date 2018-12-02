@@ -39,6 +39,7 @@ namespace GroupProject
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICreditCardService, CreditCardService>();
+            services.AddTransient<ICryptoService, CryptoService>();
 
             services.Configure<MvcOptions>(o =>
             {

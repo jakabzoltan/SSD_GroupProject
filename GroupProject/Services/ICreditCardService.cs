@@ -19,7 +19,7 @@ namespace GroupProject.Services
         /// <param name="creditCard">The credit card.</param>
         /// <param name="cvcCode">The CVC code.</param>
         /// <returns>Returns the id of the created credit card.</returns>
-        Task<CreditCard> CreateCreditCardAsync(string creditCard, string cvcCode);
+        Task<CreditCard> CreateCreditCardAsync(string creditCard, string cvcCode, string userId);
 
         /// <summary>
         /// Gets the credit card asynchronously.
@@ -36,5 +36,7 @@ namespace GroupProject.Services
         /// <param name="offset">The offset.</param>
         /// <returns>Returns a list of credit cards which match the specified expression.</returns>
         Task<IEnumerable<CreditCard>> QueryAsync(Expression<Func<CreditCard, bool>> expression, int? count, int offset);
+
+        Task<bool> UpdateCreditCard(CreditCard card);
     }
 }

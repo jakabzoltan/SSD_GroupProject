@@ -51,9 +51,9 @@ namespace GroupProject.Services
         /// <summary>
         /// Creates the credit card asynchronously.
         /// </summary>
-        /// <param name="company">The company.</param>
         /// <param name="creditCard">The credit card.</param>
         /// <param name="cvcCode">The CVC code.</param>
+        /// <param name="userId">The user ID.</param>
         /// <returns>Returns the id of the created credit card.</returns>
         public async Task<CreditCard> CreateCreditCardAsync(string creditCard, string cvcCode, string userId)
         {
@@ -125,6 +125,35 @@ namespace GroupProject.Services
             }
 
             return await creditCards.ToListAsync();
+        }
+
+        public async Task<bool> UpdateCreditCard(CreditCard card)
+        {
+            var creditCard = await context.CreditCard.FirstOrDefaultAsync(x => x.Id == card.Id);
+            if (creditCard == null) return false;
+            if (creditCard.UserId != card.UserId) return false;
+
+            var encryptedContent = this.cryptoService.EncryptContent(card.PTCC);
+            var signedContent = this.cryptoService.SignContent(Convert.FromBase64String(encryptedContent));
+
+
+            try
+            {
+                creditCard.ECC = encryptedContent;
+                creditCard.SECC = signedContent;
+                creditCard.CvcCode = dataProtector.Protect(card.CvcCode);
+                await context.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+
+
+
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 using GroupProject.Services;
 using GroupProject.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace GroupProject.Controllers
 {
@@ -26,17 +27,21 @@ namespace GroupProject.Controllers
         private readonly GroupProjectContext _context;
         private readonly ICryptoService _cryptoService;
         private readonly ICreditCardService _creditCardService;
-        public CreditCardsController(GroupProjectContext context, ICryptoService cryptoService, ICreditCardService creditCardService)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public CreditCardsController(GroupProjectContext context, ICryptoService cryptoService, ICreditCardService creditCardService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _cryptoService = cryptoService;
             _creditCardService = creditCardService;
+            _userManager = userManager;
         }
 
         // GET: CreditCards
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CreditCard.ToListAsync());
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return View(await _context.CreditCard.Where(x=>x.UserId == user.Id).ToListAsync());
         }
 
         // GET: CreditCards/Details/5
@@ -47,13 +52,15 @@ namespace GroupProject.Controllers
                 return NotFound();
             }
 
-            var creditCard = await _context.CreditCard
-                .SingleOrDefaultAsync(m => m.Id == id);
+
+            var creditCard = await _creditCardService.GetCreditCardAsync((Guid)id);
             if (creditCard == null)
             {
                 return NotFound();
             }
-
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (creditCard.UserId != user.Id)
+                RedirectToAction("Index");
 
             if (_cryptoService.VerifySignedContent(creditCard.SECC))
             {
@@ -83,8 +90,8 @@ namespace GroupProject.Controllers
             {
                 //creditCard.ECC = _cryptoService.EncryptContent(creditCard.PTCC);
                 //creditCard.SECC = _cryptoService.SignContent(Convert.FromBase64String(creditCard.ECC));
-
-                await _creditCardService.CreateCreditCardAsync(creditCard.PTCC, creditCard.CvcCode);
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                await _creditCardService.CreateCreditCardAsync(creditCard.PTCC, creditCard.CvcCode,user.Id);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -98,12 +105,16 @@ namespace GroupProject.Controllers
             {
                 return NotFound();
             }
-            var creditCard = await _creditCardService.GetCreditCardAsync((Guid)id);
+            var creditCard = await _creditCardService.GetCreditCardAsync((Guid) id);
 
-            
+            if ((await _userManager.GetUserAsync(HttpContext.User)).Id != creditCard.UserId)
+            {
+                return RedirectToAction("Index");
+            }
 
 
-            if (_cryptoService.VerifySignedContent(creditCard.SECC))
+
+        if (_cryptoService.VerifySignedContent(creditCard.SECC))
             {
                 creditCard.PTCC = _cryptoService.DecryptContent(creditCard.ECC);
             }
@@ -121,7 +132,7 @@ namespace GroupProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ECC,SECC")] CreditCard creditCard)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,PTCC,CvcCode")] CreditCard creditCard)
         {
             if (id != creditCard.Id)
             {
@@ -132,8 +143,8 @@ namespace GroupProject.Controllers
             {
                 try
                 {
-                    _context.Update(creditCard);
-                    await _context.SaveChangesAsync();
+                    creditCard.UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+                    await _creditCardService.UpdateCreditCard(creditCard);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,12 +170,19 @@ namespace GroupProject.Controllers
                 return NotFound();
             }
 
+
             var creditCard = await _context.CreditCard
                 .SingleOrDefaultAsync(m => m.Id == id);
+
             if (creditCard == null)
             {
                 return NotFound();
             }
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (creditCard.UserId != user.Id)
+                RedirectToAction("Index");
+
 
             return View(creditCard);
         }
@@ -175,6 +193,13 @@ namespace GroupProject.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var creditCard = await _context.CreditCard.SingleOrDefaultAsync(m => m.Id == id);
+
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (creditCard.UserId != user.Id)
+                RedirectToAction("Index");
+
+
             _context.CreditCard.Remove(creditCard);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

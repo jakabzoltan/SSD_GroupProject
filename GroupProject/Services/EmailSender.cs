@@ -59,7 +59,7 @@ namespace GroupProject.Services
                 return Task.CompletedTask;*/
             } catch(Exception e)
             {
-                return Task.FromException(e);
+                return Task.CompletedTask;
             }
             
         }
